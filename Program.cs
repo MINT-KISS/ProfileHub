@@ -6,6 +6,7 @@ using ProfileHub.Data;
 using ProfileHub.Data.Repositories;
 using ProfileHub.Interfaces;
 using ProfileHub.Services;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 // Configure AWS S3
 var awsOptions = builder.Configuration.GetSection("AWS").Get<AwsOptions>();
 builder.Services.AddSingleton<IAmazonS3>(sp =>
@@ -31,7 +33,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "UserManagementAPI", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProfileHub", Version = "v1" });
+
+    // Configure Swagger to use XML comments
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
 });
 
 var app = builder.Build();
@@ -42,7 +49,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "UserManagementAPI v1");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProfileHub v1");
     });
 }
 

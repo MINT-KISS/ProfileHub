@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProfileHub.Interfaces;
 using ProfileHub.Models;
-using ProfileHub.Repositories;
+
 
 namespace ProfileHub.Controllers
 {
@@ -9,8 +10,13 @@ namespace ProfileHub.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
+        private readonly IS3Service _s3Service;
 
-        public UsersController(IUserRepository userRepository) => _userRepository = userRepository;
+        public UsersController(IUserRepository userRepository, IS3Service s3Service)
+        {
+            _userRepository = userRepository;
+            _s3Service = s3Service;
+        }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers() => Ok(await _userRepository.GetUsersAsync());
@@ -46,6 +52,24 @@ namespace ProfileHub.Controllers
         {
             await _userRepository.DeleteUserAsync(id);
             return NoContent();
+        }
+
+        [HttpPost("{id}/photo")]
+        public async Task<IActionResult> UploadPhoto(int id, IFormFile file)
+        {
+            var user = await _userRepository.GetUserAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var keyName = $"users/{id}/{file.FileName}";
+            var photoUrl = await _s3Service.UploadFileAsync(file, keyName);
+
+            user.ProfilePhotoUrl = photoUrl;
+            await _userRepository.UpdateUserAsync(user);
+
+            return Ok(new { photoUrl });
         }
     }
 }

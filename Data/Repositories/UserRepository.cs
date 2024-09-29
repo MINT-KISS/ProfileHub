@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProfileHub.Data;
+using ProfileHub.Interfaces;
 using ProfileHub.Models;
 
-namespace ProfileHub.Repositories
+namespace ProfileHub.Data.Repositories
 {
     public class UserRepository(ApplicationDbContext context) : IUserRepository
     {
@@ -10,7 +10,7 @@ namespace ProfileHub.Repositories
 
         public async Task<IEnumerable<User>> GetUsersAsync() => await _context.Users.ToListAsync();
 
-        public async Task<User> GetUserAsync(int id) => await _context.Users.FindAsync(id);
+        public async Task<User?> GetUserAsync(int id) => await _context.Users.FindAsync(id);
 
         public async Task AddUserAsync(User user)
         {

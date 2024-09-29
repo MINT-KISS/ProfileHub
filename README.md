@@ -57,22 +57,23 @@ Before running the project, you must configure AWS S3 and update the `appsetting
 
    ```json
    {
-     { “ConnectionStrings”: {
-       { “DefaultConnection”: “Data Source=Database/ProfileHub.db”.
-     },
-     { “AWS”: {
-       “AccessKey": ‘your-access-key’,
-       { “SecretKey”: “your-secret-key”,
-       “Region": { “your-region”,
-       “BucketName": ”your-bucket-name”
-     },
-     “Logging": {
-       { “LogLevel”: {
-         { “default”: { “information”,
-         { “Microsoft.AspNetCore”: “Warning”.
-       }
-     },
-     “AllowedHosts": “*”
+      "ConnectionStrings": {
+         "DefaultConnection": "Data Source=Database/ProfileHub.db"
+      },
+
+      "AWS": {
+         "AccessKey": "your-access-key",
+         "SecretKey": "your-secret-key",
+         "Region": "your-region",
+         "BucketName": "your-bucket-name"
+      },
+      "Logging": {
+         "LogLevel": {
+            "Default": "Information",
+            "Microsoft.AspNetCore": "Warning"
+         }
+      },
+      "AllowedHosts": "*"
    }
    ```
 

@@ -1,7 +1,7 @@
 using Amazon;
 using Amazon.S3;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using ProfileHub.Data;
 using ProfileHub.Data.Repositories;
 using ProfileHub.Interfaces;
@@ -29,7 +29,10 @@ builder.Services.AddSingleton<IS3Service>(sp =>
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "UserManagementAPI", Version = "v1" });
+});
 
 var app = builder.Build();
 
@@ -37,7 +40,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "UserManagementAPI v1");
+    });
 }
 
 app.UseHttpsRedirection();

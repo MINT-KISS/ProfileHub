@@ -18,9 +18,18 @@ namespace ProfileHub.Controllers
             _s3Service = s3Service;
         }
 
+        /// <summary>
+        /// Get all users.
+        /// </summary>
+        /// <returns>A list of users.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers() => Ok(await _userRepository.GetUsersAsync());
 
+        /// <summary>
+        /// Get a user by ID.
+        /// </summary>
+        /// <param name="id">The ID of the user.</param>
+        /// <returns>The user with the specified ID.</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
@@ -28,6 +37,11 @@ namespace ProfileHub.Controllers
             return user == null ? NotFound() : Ok(user);
         }
 
+        /// <summary>
+        /// Create a new user.
+        /// </summary>
+        /// <param name="user">The user to create.</param>
+        /// <returns>The created user.</returns>
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
@@ -35,6 +49,12 @@ namespace ProfileHub.Controllers
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }
 
+        /// <summary>
+        /// Update an existing user.
+        /// </summary>
+        /// <param name="id">The ID of the user to update.</param>
+        /// <param name="user">The updated user data.</param>
+        /// <returns>No content.</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
         {
@@ -47,6 +67,11 @@ namespace ProfileHub.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Delete a user by ID.
+        /// </summary>
+        /// <param name="id">The ID of the user to delete.</param>
+        /// <returns>No content.</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
@@ -54,6 +79,12 @@ namespace ProfileHub.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Upload a photo for a user.
+        /// </summary>
+        /// <param name="id">The ID of the user.</param>
+        /// <param name="file">The photo file to upload.</param>
+        /// <returns>The URL of the uploaded photo.</returns>
         [HttpPost("{id}/photo")]
         public async Task<IActionResult> UploadPhoto(int id, IFormFile file)
         {

@@ -33,7 +33,7 @@ ProfileHub is a RESTful API developed on ASP.NET Core that allows you to manage 
 
 2. **Install dependencies:**
 
-   ````bash
+   ```bash
    dotnet restore
    ```
 

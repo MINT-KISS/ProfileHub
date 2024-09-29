@@ -29,16 +29,19 @@ ProfileHub is a RESTful API developed on ASP.NET Core that allows you to manage 
    ```bash
    git clone https://github.com/MINT-KISS/ProfileHub.git
    cd ProfileHub
+   ```
 
 2. **Install dependencies:**
 
    ````bash
    dotnet restore
+   ```
 
 3. **Create the database and apply the migrations:** ```bash dotnet restore 3.
 
    ```bash
    dotnet ef database update
+   ```
 
 ## Customization
 
@@ -54,23 +57,24 @@ Before running the project, you must configure AWS S3 and update the `appsetting
 
    ```json
    {
-     { “ConnectionStrings”: {
-       { “DefaultConnection”: “Data Source=Database/ProfileHub.db”.
+     { â€œConnectionStringsâ€: {
+       { â€œDefaultConnectionâ€: â€œData Source=Database/ProfileHub.dbâ€.
      },
-     { “AWS”: {
-       “AccessKey": ‘your-access-key’,
-       { “SecretKey”: “your-secret-key”,
-       “Region": { “your-region”,
-       “BucketName": ”your-bucket-name”
+     { â€œAWSâ€: {
+       â€œAccessKey": â€˜your-access-keyâ€™,
+       { â€œSecretKeyâ€: â€œyour-secret-keyâ€,
+       â€œRegion": { â€œyour-regionâ€,
+       â€œBucketName": â€your-bucket-nameâ€
      },
-     “Logging": {
-       { “LogLevel”: {
-         { “default”: { “information”,
-         { “Microsoft.AspNetCore”: “Warning”.
+     â€œLogging": {
+       { â€œLogLevelâ€: {
+         { â€œdefaultâ€: { â€œinformationâ€,
+         { â€œMicrosoft.AspNetCoreâ€: â€œWarningâ€.
        }
      },
-     “AllowedHosts": “*”
+     â€œAllowedHosts": â€œ*â€
    }
+   ```
 
 ## Usage
 
@@ -78,6 +82,7 @@ Before running the project, you must configure AWS S3 and update the `appsetting
 
    ```bash
    dotnet run
+   ```
 
 2. **Open the Swagger UI:**
 
@@ -105,12 +110,12 @@ You can use Swagger UI or Postman to test the API.
 
 1. Navigate to `https://localhost:5203/swagger`.
 2. Select the desired endpoint and click `Try it out'.
-3. Enter the required parameters and click “Execute”.
+3. Enter the required parameters and click â€œExecuteâ€.
 
 ### Postman
 
 1. Import the Postman collection from the `ProfileHub.postman_collection.json` file.
-2. Select the desired request and click “Send”.
+2. Select the desired request and click â€œSendâ€.
 
 ### Project Structure
 
